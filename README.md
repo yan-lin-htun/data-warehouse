@@ -29,5 +29,5 @@ $ sudo gitlab-runner start
 $ sudo gitlab-runner register
 ```
 
-## (4) Create variables for AWS_ACCESS_KEY and AWS_SECRET_KEY.
+## (4) Create variables for AWS_ACCESS_KEY and AWS_SECRET_KEY in GitLab.
 
