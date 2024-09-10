@@ -1,15 +1,5 @@
-#Created by "YLT"
+#Created by YLT
 
-module "s3" {
-    source = "./S3"
+module "ec2-alb-rds-cloudwatch-sns" {
+  source = "./EC2-ALB-RDS-CloudWatch-SNS"
 }
-
-module "aws-glue" {
-  source = "./AWS-Glue"
-}
-
-module "ecs-clientvpn-redshift" {
-  source = "./EC2-ClientVPN-Redshift"
-}
-
-

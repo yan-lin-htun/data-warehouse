@@ -1,22 +1,34 @@
 #Created by "YLT"
 
 resource "aws_s3_bucket" "s3-bucket" {
-  bucket = lookup(var.name_s3-bucket, terraform.workspace)
+  bucket = var.name_s3-bucket
 
   tags   = {
-    Name = lookup(var.name_s3, terraform.workspace)
+    Name = var.name_s3-bucket
   }
 }
 
-resource "aws_s3_object" "folders" {
-  count  = length(var.folder-name)
-  key    = "${var.folder-name[count.index]}/"
+resource "aws_s3_bucket_policy" "bucket_policy" {
   bucket = aws_s3_bucket.s3-bucket.id
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::114774131450:root"
+            },
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::ecommerce-app-alb-bucket/*"
+        }
+    ]
+}
+EOF
 }
 
-resource "aws_s3_object" "files" {
-  count  = length(var.file-name)
-  bucket = aws_s3_bucket.s3-bucket.id
-  key    = "python-scripts/${var.file-name[count.index]}"
-  source = "/dev/null"
+
+output "s3-bucket-id" {
+   value = aws_s3_bucket.s3-bucket.id
 }
